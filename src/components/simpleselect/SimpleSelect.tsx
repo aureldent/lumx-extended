@@ -58,8 +58,25 @@ export interface SimpleSelectProps {
 	helper?: React.ReactNode | string
 	hasError?: boolean
 	onInfiniteScroll?: () => void
+	/**
+	 * Custom onSearch function
+	 * Intended for server-side search
+	 */
 	onSearch?: (filterValue: string) => void
+	/**
+	 * Is searching 
+	 * Intended for server-side search
+	 */
 	isSearching?: boolean
+	/**
+	 * Custom debouce timer (default 500ms) to avoid searching to often
+	 * Intended for server-side search
+	 */
+	searchDebounceMs?: number
+	/**
+	 * A filler used when the choices are empty 
+	 * and the select is not loading
+	 */
 	noDataFiller?: string | React.ReactNode
 	isDisabled?: boolean
 	theme?: Theme
@@ -72,12 +89,13 @@ export const SimpleSelect: React.FC<SimpleSelectProps> = ({
 	onPicked: setValue,
 	label,
 	isLoading = false,
-	withSearch = true,
+	withSearch = false,
 	helper = '',
 	hasError = false,
 	onInfiniteScroll = undefined,
 	onSearch = undefined,
 	isSearching = undefined,
+	searchDebounceMs = 500,
 	noDataFiller = undefined,
 	isDisabled = false,
 	theme = undefined
@@ -135,7 +153,7 @@ export const SimpleSelect: React.FC<SimpleSelectProps> = ({
 		() => {
 			handleOnSearch()
 		},
-		500,
+		searchDebounceMs,
 		[filterValue]
 	)
 

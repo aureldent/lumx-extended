@@ -31,6 +31,7 @@ const DataTableBody: React.FC<DataTableBody0Props> = ({
                     tableData.map((row: any, index: number) => {
                         return (
                             <DataTableRow
+                            key={index}
                                 theme={theme}
                                 row={row}
                                 index={index}

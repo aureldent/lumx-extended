@@ -1,10 +1,10 @@
 import React from 'react'
 
 import { DataTable } from './DataTable'
-import { Theme, ThScope } from '@lumx/react'
+import { ThScope } from '@lumx/react'
 
 export default {
-	title: 'components/datatable/DataTable',
+	title: 'components/DataTable',
 	component: DataTable
 }
 

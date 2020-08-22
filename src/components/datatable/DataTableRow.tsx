@@ -26,7 +26,7 @@ const DataTableRow: React.FC<DataTableRow> = ({
     return (
         <TableRow key={index}>
             {selectableRows !== SelectableRowsOptions.none && (
-                <TableCell key={-1}>
+                <TableCell key={-1 * (index + 1)}>
                     <Checkbox
                         value={
                             selectedRows && selectedRows.indexOf(row.id) !== -1

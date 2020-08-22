@@ -1,41 +1,40 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
-import { SimpleSelect } from './SimpleSelect'
-import { Theme } from '@lumx/react'
-import { mdiMagnify, mdiAccessPoint } from '@lumx/icons'
+import { SimpleSelect } from "./SimpleSelect";
+
+import { mdiMagnify, mdiAccessPoint } from "@lumx/icons";
 
 export default {
-	title: 'components/simpleselect/SimpleSelect',
-	component: SimpleSelect
-}
+  title: "components/SimpleSelect",
+  component: SimpleSelect,
+};
 
-/**
- * Avatar story showing a simple avatar with different actions.
- * @return component with different actions.
- */
-export const simpleSelectBasic = (props: any) => {
+const choices = [
+  {
+    value: "1",
+    label: "choice1",
+    icon: mdiMagnify,
+    data: {},
+  },
+  {
+    value: "2",
+    label: "choice2",
+    icon: mdiAccessPoint,
+    data: {},
+  },
+];
 
-    const [pickedVal, setPickedVal] = useState(undefined)
-	return (
-		<SimpleSelect
-            label='Label'
-            {...props}
-			choices={[
-				{
-					value: '1',
-					label: 'choice1',
-					icon: mdiMagnify,
-					data: {}
-                },
-                {
-					value: '2',
-					label: 'choice2',
-					icon: mdiAccessPoint,
-					data: {}
-				}
-            ]}
-            onPicked={setPickedVal}
-            value={pickedVal}
-		/>
-	)
-}
+export const Basic = (props: any) => {
+  const [pickedVal, setPickedVal] = useState(undefined);
+  return <SimpleSelect {...props} onPicked={setPickedVal} value={pickedVal} />;
+};
+Basic.args = { choices };
+
+export const WithSearch = Basic.bind();
+WithSearch.args = { choices, withSearch: true, onSearch: undefined };
+
+export const IsLoading = Basic.bind();
+IsLoading.args = { choices: [], isLoading: true };
+
+export const NoData = Basic.bind();
+NoData.args = { choices: [], noDataFiller: "No Data in the select" };
