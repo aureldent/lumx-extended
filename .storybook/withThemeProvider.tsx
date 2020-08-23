@@ -1,4 +1,6 @@
-import { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
+
+import { Theme, Switch, Toolbar, Divider } from '@lumx/react'
 
 import { GlobalTheme } from '@lumx/core/js/types'
 
@@ -8,6 +10,9 @@ import { GlobalTheme } from '@lumx/core/js/types'
  */
 import '@lumx/core/scss/lumx-theme-lumapps.scss'
 import '@lumx/core/scss/lumx-theme-material.scss'
+import '@lumx/core/lumx-theme-lumapps.css'
+import '@lumx/core/lumx-theme-material.css'
+
 
 const GLOBAL_THEMES = ['lumapps', 'material'] as GlobalTheme[]
 const stylesNodes: Node[] = []
@@ -60,3 +65,34 @@ export function useInjectTheme(globalTheme: GlobalTheme) {
 		}
 	}, [globalTheme])
 }
+
+const withThemeProvider = (Story, context) => {
+	useInjectTheme(context.globals.globalTheme)
+
+	const [lumxTheme, setLumxTheme] = useState<Theme>(Theme.light)
+	const dark = 'lumx-color-background-dark-N'
+	const className = lumxTheme == Theme.dark ? dark : ''
+
+	context.args.theme = lumxTheme
+	return (
+		<>
+			<div className={className}>
+				<Story {...context} />
+			</div>
+			<Divider/>
+			<Toolbar
+				after={
+					<Switch
+						checked={lumxTheme === Theme.dark}
+						onToggle={() => {
+							lumxTheme === Theme.dark
+								? setLumxTheme(Theme.light)
+								: setLumxTheme(Theme.dark)
+						}}
+					>Background</Switch>
+				}
+			/>
+		</>
+	)
+}
+export default withThemeProvider
