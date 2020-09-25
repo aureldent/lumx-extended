@@ -1,0 +1,37 @@
+
+name: Fake publish 📦
+
+on:
+  release:
+    types: [created]
+
+jobs:
+
+  Package:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Setup node
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: '12'
+      
+      - name: Setup node
+        run: npm version major
+
+      - name: Commit files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -m "Add changes" -a
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
