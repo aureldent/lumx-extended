@@ -17,7 +17,7 @@ jobs:
           
       - name: Generate changelog
         id: generate_changelog
-        uses: lumapps/changelog-generator@bootstrap
+        uses: sebastien-boulle/changelog-generator@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
