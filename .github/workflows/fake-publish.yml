@@ -21,15 +21,14 @@ jobs:
         uses: actions/setup-node@v2-beta
         with:
           node-version: '12'
-      
-      - name: Setup node
-        run: npm version major
 
-      - name: Commit files
+      - name: Config git
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git commit -m "Add changes" -a
+      
+      - name: Setup node
+        run: npm version major
 
       - name: Push changes
         uses: ad-m/github-push-action@master
